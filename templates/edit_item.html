@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Item{% endblock %}
+
+{% block content %}
+<h2 class="mt-4">Edit Item</h2>
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="name" class="form-label">Item Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ item.name }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="4" required>{{ item.description }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" name="category">
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if item.category_id == category.id %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="date" class="form-label">Date Lost/Found</label>
+        <input type="date" class="form-control" id="date" name="date" value="{{ item.date }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" id="location" name="location" value="{{ item.location }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" name="status">
+            <option value="Found" {% if item.status == "Found" %}selected{% endif %}>Found</option>
+            <option value="Lost" {% if item.status == "Lost" %}selected{% endif %}>Lost</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Item Image</label>
+        <input type="file" class="form-control" id="image" name="image">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{{ url_for('view_item_detail', item_id=item.id) }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
